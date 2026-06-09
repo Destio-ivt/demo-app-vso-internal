@@ -1,4 +1,4 @@
-# Build stage (Tetap gunakan dist karena Vite/React modern biasanya menghasilkan folder /dist)
+# Build stage
 FROM node:20-alpine AS build
 WORKDIR /app
 COPY package*.json ./
@@ -9,11 +9,10 @@ RUN npm run build
 # Production stage
 FROM nginxinc/nginx-unprivileged:alpine
 
-# Salin konten ke /tmp/app dan set permissions
+# Salin konten dari stage 'build' ke direktori yang bisa ditulis (/tmp/app)
 USER root
-RUN mkdir -p /tmp/app && \
-    cp -r /app/dist/* /tmp/app/ && \
-    chown -R nginx:nginx /tmp/app
+COPY --from=build /app/dist /tmp/app
+RUN chown -R nginx:nginx /tmp/app
 
 # Buat file konfigurasi Nginx yang baru agar root mengarah ke /tmp/app
 RUN echo 'server { \
