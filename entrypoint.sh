@@ -1,7 +1,19 @@
 #!/bin/sh
-# Generate runtime-config.js dari environment variables
-envsubst < /usr/share/nginx/html/runtime-config.js > /tmp/runtime-config.js
-mv /tmp/runtime-config.js /usr/share/nginx/html/runtime-config.js
+set -e
+
+# DEBUG
+echo "DEBUG: Checking environment variables for runtime-config.js..."
+
+CONFIG_FILE="/usr/share/nginx/html/runtime-config.js"
+
+# Gunakan envsubst untuk menimpa file
+# Kita arahkan output ke file sementara, lalu pindahkan
+envsubst < "$CONFIG_FILE" > /tmp/runtime-config.tmp
+mv /tmp/runtime-config.tmp "$CONFIG_FILE"
+
+# Verifikasi
+echo "Content of runtime-config.js after substitution:"
+cat "$CONFIG_FILE"
 
 # Jalankan Nginx
-nginx -g 'daemon off;'
+exec nginx -g 'daemon off;'

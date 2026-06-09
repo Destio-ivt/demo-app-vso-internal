@@ -11,7 +11,9 @@ FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY entrypoint.sh /entrypoint.sh
 USER root
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh && \
+    chown nginx:nginx /usr/share/nginx/html/runtime-config.js && \
+    chmod 644 /usr/share/nginx/html/runtime-config.js
 USER nginx
 
 # Ekspos ke port 8080 (Aman untuk OpenShift non-root)
