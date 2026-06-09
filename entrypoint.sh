@@ -1,19 +1,21 @@
 #!/bin/sh
 set -e
 
-# DEBUG
-echo "DEBUG: Checking environment variables for runtime-config.js..."
+# Salin file asli ke /tmp agar bisa dimodifikasi
+cp /usr/share/nginx/html/runtime-config.js /tmp/runtime-config.js
 
-CONFIG_FILE="/usr/share/nginx/html/runtime-config.js"
+# Lakukan substitusi pada file di /tmp
+envsubst < /tmp/runtime-config.js > /tmp/runtime-config.tmp
+mv /tmp/runtime-config.tmp /tmp/runtime-config.js
 
-# Gunakan envsubst untuk menimpa file
-# Kita arahkan output ke file sementara, lalu pindahkan
-envsubst < "$CONFIG_FILE" > /tmp/runtime-config.tmp
-mv /tmp/runtime-config.tmp "$CONFIG_FILE"
+# Buat symbolic link dari lokasi asli ke file yang sudah dimodifikasi di /tmp
+# Jika folder asli read-only, kita mungkin butuh pendekatan lain (misal mengkonfigurasi ulang root Nginx)
+# Namun mari coba ini dulu.
+ln -sf /tmp/runtime-config.js /usr/share/nginx/html/runtime-config.js
 
 # Verifikasi
-echo "Content of runtime-config.js after substitution:"
-cat "$CONFIG_FILE"
+echo "Content of /tmp/runtime-config.js after substitution:"
+cat /tmp/runtime-config.js
 
 # Jalankan Nginx
 exec nginx -g 'daemon off;'
