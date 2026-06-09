@@ -1,17 +1,18 @@
 import './App.css'
 
 function App() {
+  const config = (window as any).RUNTIME_CONFIG || {};
   const envVars = [
-    { key: 'App Title', value: import.meta.env.VITE_APP_TITLE },
-    { key: 'API Endpoint', value: import.meta.env.VITE_API_ENDPOINT },
-    { key: 'Max Retries', value: import.meta.env.VITE_MAX_RETRIES },
-    { key: 'Enable Analytics', value: import.meta.env.VITE_ENABLE_ANALYTICS },
-    { key: 'Theme Color', value: import.meta.env.VITE_THEME_COLOR },
-    { key: 'Support Email', value: import.meta.env.VITE_SUPPORT_EMAIL },
-    { key: 'Session Timeout', value: import.meta.env.VITE_SESSION_TIMEOUT_MINUTES },
-    { key: 'Beta Feature', value: import.meta.env.VITE_FEATURE_FLAG_BETA },
-    { key: 'Company Name', value: import.meta.env.VITE_COMPANY_NAME },
-    { key: 'App Version', value: import.meta.env.VITE_APP_VERSION },
+    { key: 'App Title', value: config.VITE_APP_TITLE },
+    { key: 'API Endpoint', value: config.VITE_API_ENDPOINT },
+    { key: 'Max Retries', value: config.VITE_MAX_RETRIES },
+    { key: 'Enable Analytics', value: config.VITE_ENABLE_ANALYTICS },
+    { key: 'Theme Color', value: config.VITE_THEME_COLOR },
+    { key: 'Support Email', value: config.VITE_SUPPORT_EMAIL },
+    { key: 'Session Timeout', value: config.VITE_SESSION_TIMEOUT_MINUTES },
+    { key: 'Beta Feature', value: config.VITE_FEATURE_FLAG_BETA },
+    { key: 'Company Name', value: config.VITE_COMPANY_NAME },
+    { key: 'App Version', value: config.VITE_APP_VERSION },
   ];
 
   return (

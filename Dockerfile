@@ -9,7 +9,11 @@ RUN npm run build
 # Production stage (Ganti ke unprivileged)
 FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
+COPY entrypoint.sh /entrypoint.sh
+USER root
+RUN chmod +x /entrypoint.sh
+USER nginx
 
 # Ekspos ke port 8080 (Aman untuk OpenShift non-root)
 EXPOSE 8080
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/entrypoint.sh"]
