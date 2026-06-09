@@ -1,7 +1,22 @@
 import './App.css'
 
+import { useEffect, useState } from 'react';
+import './App.css'
+
 function App() {
-  const config = (window as any).RUNTIME_CONFIG || {};
+  const [config, setConfig] = useState<any>(null);
+
+  useEffect(() => {
+    fetch('/config.json')
+      .then((res) => res.json())
+      .then((data) => setConfig(data))
+      .catch((err) => console.error("Gagal memuat config", err));
+  }, []);
+
+  if (!config) {
+    return <div>Loading configuration...</div>;
+  }
+
   const envVars = [
     { key: 'App Title', value: config.VITE_APP_TITLE },
     { key: 'API Endpoint', value: config.VITE_API_ENDPOINT },

@@ -1,0 +1,12 @@
+{
+  "VITE_APP_TITLE": "test",
+  "VITE_API_ENDPOINT": "test",
+  "VITE_MAX_RETRIES": "test",
+  "VITE_ENABLE_ANALYTICS": "test",
+  "VITE_THEME_COLOR": "test",
+  "VITE_SUPPORT_EMAIL": "test",
+  "VITE_SESSION_TIMEOUT_MINUTES": "test",
+  "VITE_FEATURE_FLAG_BETA": "test",
+  "VITE_COMPANY_NAME": "test",
+  "VITE_APP_VERSION": "test"
+}
