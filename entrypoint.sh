@@ -8,9 +8,10 @@ cp /usr/share/nginx/html/runtime-config.js /tmp/runtime-config.js
 envsubst < /tmp/runtime-config.js > /tmp/runtime-config.tmp
 mv /tmp/runtime-config.tmp /tmp/runtime-config.js
 
+# Hapus file yang ada sebelum membuat symbolic link
+rm -f /usr/share/nginx/html/runtime-config.js
+
 # Buat symbolic link dari lokasi asli ke file yang sudah dimodifikasi di /tmp
-# Jika folder asli read-only, kita mungkin butuh pendekatan lain (misal mengkonfigurasi ulang root Nginx)
-# Namun mari coba ini dulu.
 ln -sf /tmp/runtime-config.js /usr/share/nginx/html/runtime-config.js
 
 # Verifikasi
